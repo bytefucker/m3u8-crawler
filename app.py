@@ -25,12 +25,14 @@ def web_page(url: str):
     resp = requests.get(url=url)
     if resp.status_code != 200:
         pass
-    data = extract_m3u8(resp.text)
-    dir = f'data/{data[0]}'
+    title, urls = extract_m3u8(resp.text)
+    dir = f'data/{title}'
     if os.path.exists(dir) is False:
         os.mkdir(dir)
     with open(f'{dir}/meta.json', 'w', encoding='utf-8') as f:
-        f.writelines(json.dumps(data, ensure_ascii=False))
+        data = json.dumps({"title": title, "urls": urls}, ensure_ascii=False)
+        f.writelines(data)
+    return title
 
 
 def download(url):
@@ -39,4 +41,6 @@ def download(url):
 
 if __name__ == "__main__":
     for i in range(0, 2000):
-        web_page(f"https://vip.aqdz198.com/videos/play/{25399-i}")
+        url = f"https://vip.aqdz198.com/videos/play/{25399-i}"
+        title = web_page(url)
+        print(f'{i}:{title}')
