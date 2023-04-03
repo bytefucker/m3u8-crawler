@@ -41,6 +41,6 @@ def download(url):
 
 if __name__ == "__main__":
     for i in range(0, 2000):
-        url = f"https://vip.aqdz198.com/videos/play/{25399-i}"
+        url = f"https://demo.com/videos/play/{25399-i}"
         title = web_page(url)
         print(f'{i}:{title}')
